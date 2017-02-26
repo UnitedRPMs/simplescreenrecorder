@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.6
-Release:        5%{?dist}
+Version:        0.3.8
+Release:        1%{?dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -66,6 +66,7 @@ mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{n
 %{_bindir}/%{shortname}-glinject
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
+%{_datadir}/appdata/simplescreenrecorder.appdata.xml
 
 %files libs
 %doc COPYING README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
@@ -84,6 +85,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 0.3.8-1
+- Updated to 0.3.8-1
 
 * Thu Jul 07 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.3.6-5
 - Rebuilt for FFmpeg 3.1
