@@ -1,6 +1,6 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.8.26
+Version:        0.3.9
 Release:        2%{?dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
@@ -20,6 +20,7 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXfixes-devel
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
+BuildRequires:	cmake
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description
@@ -41,21 +42,15 @@ This is a package for opengl capture
 %patch0 -p1 -b .ldpath
 %patch1 -p1 -b .fix-build
 
-
 %build
-export LDFLAGS="$LDFLAGS `pkg-config --libs-only-L libavformat libavcodec libavutil libswscale`"
-export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
-%configure
+%cmake .
 make %{?_smp_mflags}
 
-
 %install
-rm -rf %{buildroot}
-%make_install
-rm -f %{buildroot}%{_libdir}/*.la
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
-mkdir -p %{buildroot}%{_libdir}/%{name}
-mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{name}/lib%{shortname}-glinject.so
+make install DESTDIR=%{buildroot}
+
+%check
+ctest -V %{?_smp_mflags}
 
 %files
 %doc COPYING README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
@@ -70,7 +65,7 @@ mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{n
 
 %files libs
 %doc COPYING README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
-%{_libdir}/%{name}/lib%{shortname}-glinject.so
+%{_libdir}/lib%{shortname}-glinject.so
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -85,6 +80,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Mon Dec 11 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.9-2  
+- Updated to 0.3.9
 
 * Sat Nov 11 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.8.26-2  
 - Updated to 0.3.8.26
