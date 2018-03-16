@@ -1,6 +1,6 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.9
+Version:        0.3.10
 Release:        2%{?dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
@@ -80,6 +80,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Wed Mar 14 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.10-2  
+- Updated to 0.3.10
 
 * Mon Dec 11 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.9-2  
 - Updated to 0.3.9
