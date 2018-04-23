@@ -1,14 +1,20 @@
 %define shortname ssr
+%global debug_package %{nil}
+%global commit0 eb72d80f866a576edf770458cafbe568afe768c2
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global gver .git%{shortcommit0}
+
 Name:           simplescreenrecorder
 Version:        0.3.10
-Release:        2%{?dist}
+Release:        3%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
-Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
+Source0:        https://github.com/MaartenBaert/ssr/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Patch0:         fix_ldpath.patch
 Patch1:		simplescreenrecorder-0.3.6-fix-build.patch
+Patch2:		ffmpeg4_fix.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel
@@ -38,9 +44,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 This is a package for opengl capture
 
 %prep
-%setup -q -n %{shortname}-%{version}
-%patch0 -p1 -b .ldpath
-%patch1 -p1 -b .fix-build
+%autosetup -n %{shortname}-%{commit0} -p1
 
 %build
 %cmake .
@@ -80,6 +84,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Sat Apr 21 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.10-3.giteb72d80  
+- Updated to 0.3.10-3.giteb72d80
 
 * Wed Mar 14 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.10-2  
 - Updated to 0.3.10
