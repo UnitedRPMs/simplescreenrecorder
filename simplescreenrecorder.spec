@@ -6,7 +6,7 @@
 
 Name:           simplescreenrecorder
 Version:        0.3.10
-Release:        3%{?gver}%{dist}
+Release:        4%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -17,7 +17,7 @@ Patch1:		simplescreenrecorder-0.3.6-fix-build.patch
 Patch2:		ffmpeg4_fix.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  ffmpeg-devel
+BuildRequires:  ffmpeg-devel >= 4.0
 BuildRequires:  qt4-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  pulseaudio-libs-devel
@@ -84,6 +84,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Thu Apr 26 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.10-4.giteb72d80  
+- Automatic Mass Rebuild
 
 * Sat Apr 21 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.10-3.giteb72d80  
 - Updated to 0.3.10-3.giteb72d80
