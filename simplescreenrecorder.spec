@@ -14,7 +14,6 @@ URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Patch0:         fix_ldpath.patch
 Patch1:		simplescreenrecorder-0.3.6-fix-build.patch
-Patch2:		ffmpeg4_fix.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel >= 4.0
