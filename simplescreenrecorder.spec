@@ -1,12 +1,12 @@
 %define shortname ssr
 %global debug_package %{nil}
-%global commit0 4b5f5721419e96e9c00ded9d34d1a0090daa27ec
+%global commit0 f5c5897b250f8233108e4ac7c5e0c6438debd37c
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           simplescreenrecorder
 Version:        0.3.11
-Release:        2%{?gver}%{dist}
+Release:        3%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -16,8 +16,8 @@ Patch0:         fix_ldpath.patch
 Patch1:		simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  ffmpeg-devel >= 4.0
-BuildRequires:  qt4-devel
+BuildRequires:  ffmpeg-devel >= 4.1
+BuildRequires:  qt5-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  jack-audio-connection-kit-devel
@@ -46,7 +46,7 @@ This is a package for opengl capture
 %autosetup -n %{shortname}-%{commit0} -p1
 
 %build
-%cmake .
+%cmake -DWITH_QT5=on .
 make %{?_smp_mflags}
 
 %install
@@ -83,6 +83,11 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Thu Dec 06 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.11-3.git4b5f572 
+- Updated to current commit
+- Changed to qt5
+- Rebuilt for ffmpeg
 
 * Tue May 22 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.11-2.git4b5f572 
 - Updated to 0.3.11-2.git4b5f572
