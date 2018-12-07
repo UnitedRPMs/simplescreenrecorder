@@ -84,7 +84,7 @@ fi
 
 %changelog
 
-* Thu Dec 06 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.11-3.git4b5f572 
+* Thu Dec 06 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.11-3.gitf5c5897 
 - Updated to current commit
 - Changed to qt5
 - Rebuilt for ffmpeg
