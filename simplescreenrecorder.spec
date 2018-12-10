@@ -17,6 +17,7 @@ Patch1:		simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel >= 4.1
+BuildRequires:  qt4-devel
 BuildRequires:  qt5-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  pulseaudio-libs-devel
