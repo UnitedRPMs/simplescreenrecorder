@@ -1,12 +1,12 @@
 %define shortname ssr
 %global debug_package %{nil}
-%global commit0 f5c5897b250f8233108e4ac7c5e0c6438debd37c
+%global commit0 973cc0091c95b5a1cf534363c4621f4ce8b5b7af
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           simplescreenrecorder
 Version:        0.3.11
-Release:        3%{?gver}%{dist}
+Release:        4%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -46,6 +46,10 @@ This is a package for opengl capture
 %prep
 %autosetup -n %{shortname}-%{commit0} -p1
 
+# glinject FIX
+sed -i 's|libssr-glinject.so|/usr/\$LIB/simplescreenrecorder/libssr-glinject.so|g' scripts/ssr-glinject
+sed -i 's|libssr-glinject.so|/usr/\\$LIB/simplescreenrecorder/libssr-glinject.so|g' src/AV/Input/GLInjectInput.cpp
+
 %build
 %cmake -DWITH_QT5=on .
 make %{?_smp_mflags}
@@ -84,6 +88,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Sat Feb 02 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.11-4.git973cc00
+- Updated to current commit
 
 * Thu Dec 06 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.3.11-3.gitf5c5897 
 - Updated to current commit
