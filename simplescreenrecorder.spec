@@ -1,3 +1,5 @@
+%define _legacy_common_support 1
+
 %define shortname ssr
 %global debug_package %{nil}
 %global commit0 e7b36d596c4d6032ebed30ac536cac192ad4dd77
@@ -17,8 +19,14 @@ Patch1:	simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel >= 4.1
-BuildRequires:  qt4-devel
-BuildRequires:  qt5-devel
+BuildRequires:	pkgconfig(Qt5)
+BuildRequires:	pkgconfig(Qt5X11Extras)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Help)
+BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(xinerama)
+BuildRequires:  pkgconfig(xi)
 BuildRequires:  alsa-lib-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  jack-audio-connection-kit-devel
@@ -46,12 +54,18 @@ This is a package for opengl capture
 %prep
 %autosetup -n %{shortname}-%{commit0} -p1
 
+# Traslation fix
+sed -i 's|lrelease|lrelease-qt5|' src/translations/CMakeLists.txt
+
+
 # glinject FIX
 sed -i 's|libssr-glinject.so|/usr/\$LIB/simplescreenrecorder/libssr-glinject.so|g' scripts/ssr-glinject
 sed -i 's|libssr-glinject.so|/usr/\\$LIB/simplescreenrecorder/libssr-glinject.so|g' src/AV/Input/GLInjectInput.cpp
 
 %build
-%cmake -DWITH_QT5=on .
+
+%cmake3 -DWITH_QT5=on .
+    
 make %{?_smp_mflags}
 
 %install
