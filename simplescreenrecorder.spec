@@ -2,12 +2,12 @@
 
 %define shortname ssr
 %global debug_package %{nil}
-%global commit0 e7b36d596c4d6032ebed30ac536cac192ad4dd77
+%global commit0 c3d37e0f100ce5363f7bb5736fe1499092067b47
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           simplescreenrecorder
-Version:        0.4.0
+Version:        0.4.1
 Release:        7%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
@@ -102,6 +102,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Sat May 02 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.4.1-7.gitc3d37e0
+- Updated to 0.4.1
 
 * Thu Apr 09 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.4.0-7.gite7b36d5
 - Updated to 0.4.0
