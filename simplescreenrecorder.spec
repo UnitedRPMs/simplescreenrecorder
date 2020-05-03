@@ -83,7 +83,7 @@ ctest -V %{?_smp_mflags}
 %{_bindir}/%{shortname}-glinject
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
-%{_datadir}/appdata/simplescreenrecorder.appdata.xml
+%{_metainfodir}/simplescreenrecorder.metainfo.xml
 
 %files libs
 %doc COPYING README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
