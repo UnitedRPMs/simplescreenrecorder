@@ -1,21 +1,23 @@
-%define _legacy_common_support 1
+#global _lto_cflags %{nil}
+#define _legacy_common_support 1%undefine __cmake_in_source_build
+%undefine __cmake_in_source_build
+
 
 %define shortname ssr
 %global debug_package %{nil}
-%global commit0 ed69cf51dfa5d17179244badb0f2652574219554
+%global commit0 f3cdbf724b4c004ed29537f6487d78296b8aeedf
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           simplescreenrecorder
-Version:        0.4.2
-Release:        8%{?gver}%{dist}
+Version:        0.4.3
+Release:        7%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Patch0:         fix_ldpath.patch
-Patch1:	simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel >= 4.3
@@ -24,16 +26,21 @@ BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Gui)
 BuildRequires:  pkgconfig(Qt5Help)
+BuildRequires:  pkgconfig(Qt5Help)
 BuildRequires:  pkgconfig(Qt5Widgets)
 BuildRequires:  pkgconfig(xinerama)
 BuildRequires:  pkgconfig(xi)
-BuildRequires:  alsa-lib-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  libX11-devel
-BuildRequires:  libXfixes-devel
-BuildRequires:  mesa-libGL-devel
-BuildRequires:  mesa-libGLU-devel
+BuildRequires:  pkgconfig(alsa)
+BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(jack)
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xfixes)
+BuildRequires:  pkgconfig(gl)
+BuildRequires:  pkgconfig(glu)
+BuildRequires:  pkgconfig(xi)
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  qt5-linguist
+BuildRequires:	libv4l-devel 
 BuildRequires:	cmake
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
@@ -55,7 +62,7 @@ This is a package for opengl capture
 %autosetup -n %{shortname}-%{commit0} -p1
 
 # Traslation fix
-sed -i 's|lrelease|lrelease-qt5|' src/translations/CMakeLists.txt
+#sed -i 's|lrelease|lrelease-qt5|' src/translations/CMakeLists.txt
 
 
 # glinject FIX
@@ -64,12 +71,13 @@ sed -i 's|libssr-glinject.so|/usr/\\$LIB/simplescreenrecorder/libssr-glinject.so
 
 %build
 
-%cmake3 -DWITH_QT5=on .
-    
-make %{?_smp_mflags}
+export CFLAGS="%{optflags} -fPIC"
+export CXXFLAGS="%{optflags} -fPIC"
+mkdir -p build
+%cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=%{_lib}  -DWITH_QT5=on 
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install -C build 
 
 %check
 ctest -V %{?_smp_mflags}
@@ -102,6 +110,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Sun Dec 27 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.4.3-7.gitf3cdbf7
+- Updated to 0.4.3
 
 * Tue Jun 23 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.4.2-8.gited69cf5
 - Rebuilt for ffmpeg
