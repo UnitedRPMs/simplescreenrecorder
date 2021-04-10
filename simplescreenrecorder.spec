@@ -5,19 +5,19 @@
 
 %define shortname ssr
 %global debug_package %{nil}
-%global commit0 f3cdbf724b4c004ed29537f6487d78296b8aeedf
+%global commit0 00ebba23fb6581f9d822b79b19278ed156f21d4a
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           simplescreenrecorder
 Version:        0.4.3
-Release:        7%{?gver}%{dist}
+Release:        8%{?gver}%{dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
-Patch0:         fix_ldpath.patch
+#Patch0:         fix_ldpath.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel >= 4.3
@@ -110,6 +110,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Fri Apr 09 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.4.3-8.git00ebba2
+- Updated to current commit
 
 * Sun Dec 27 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.4.3-7.gitf3cdbf7
 - Updated to 0.4.3
